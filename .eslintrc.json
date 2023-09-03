@@ -1,0 +1,29 @@
+{
+  "root": true,
+  "extends": ["standard"],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest"
+  },
+  "overrides": [
+    {
+      "files": ["./src/**/*.ts"],
+      "extends": "standard-with-typescript",
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "plugins": ["tsdoc"],
+      "rules": {
+        "tsdoc/syntax": "warn"
+      }
+    }
+  ],
+  "rules": {
+    "max-len": [
+      "error",
+      {
+        "code": 120
+      }
+    ]
+  }
+}

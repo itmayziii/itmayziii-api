@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  payload:
+    build:
+      context: .
+      args:
+        # Must be anything except "production" otherwise dev dependencies will not be installed.
+        NODE_ENV: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/home/node/app
+    command: sh -c "npm i && npm run dev"
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    command:
+      - --storageEngine=wiredTiger
+    volumes:
+      - data:/data/db
+    logging:
+      driver: none
+
+volumes:
+  data:
