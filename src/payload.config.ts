@@ -8,6 +8,7 @@ import headshotsCollection from './collections/headshots'
 
 import homeGlobal from './globals/home'
 import userInfoGlobal from './globals/user-info'
+import navGlobal from './globals/nav'
 
 export default buildConfig({
   admin: {
@@ -19,8 +20,9 @@ export default buildConfig({
     headshotsCollection
   ],
   globals: [
+    userInfoGlobal,
     homeGlobal,
-    userInfoGlobal
+    navGlobal
   ],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts')
