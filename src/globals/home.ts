@@ -1,5 +1,6 @@
 import { type GlobalConfig } from 'payload/types'
 import iconField from '../fields/iconField'
+import proficiencyField from '../fields/proficiencyField'
 
 const homeGlobal: GlobalConfig = {
   slug: 'home',
@@ -69,10 +70,8 @@ const homeGlobal: GlobalConfig = {
               required: true
             },
             {
-              name: 'proficiency',
-              type: 'number',
-              min: 1,
-              max: 100,
+              ...proficiencyField,
+              hasMany: false,
               required: true
             }
           ]

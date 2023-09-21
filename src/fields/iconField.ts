@@ -83,6 +83,22 @@ const iconField: SelectField = {
     {
       label: 'PHP',
       value: 'php'
+    },
+    {
+      label: 'Mail',
+      value: 'mail'
+    },
+    {
+      label: 'Map',
+      value: 'map'
+    },
+    {
+      label: 'Terraform',
+      value: 'terraform'
+    },
+    {
+      label: 'Construction',
+      value: 'construction'
     }
   ]
 }

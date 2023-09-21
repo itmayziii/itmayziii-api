@@ -1,18 +1,38 @@
 import path from 'path'
 import { buildConfig } from 'payload/config'
-import { payloadCloud as payloadCloudStorage } from '@payloadcms/plugin-cloud'
-
+import { cloudStorage } from '@payloadcms/plugin-cloud-storage'
+import { gcsAdapter } from '@payloadcms/plugin-cloud-storage/gcs'
 import usersCollection from './collections/users'
 import machinesCollection from './collections/machines'
 import headshotsCollection from './collections/headshots'
-
 import homeGlobal from './globals/home'
-import userInfoGlobal from './globals/user-info'
+import userInfoGlobal from './globals/userInfo'
 import navGlobal from './globals/nav'
+import contactGlobal from './globals/contact'
+import contactFormEndpoint from './endpoints/contactFormEndpoint'
+
+const emptyMockPath = path.resolve(__dirname, 'mocks/empty')
+const serverUtilitiesPath = path.resolve(__dirname, 'serverUtilities')
+const serverUtilitiesMockPath = path.resolve(__dirname, 'mocks/serverUtilitiesMock')
+const contactFormEndpointPath = path.resolve(__dirname, 'endpoints/contactFormEndpoint')
+const contactFormEndpointMockPath = path.resolve(__dirname, 'mocks/contactFormEndpointMock')
+const fsPromisesPath = 'fs/promises'
 
 export default buildConfig({
   admin: {
-    user: usersCollection.slug
+    user: usersCollection.slug,
+    webpack: (config) => ({
+      ...config,
+      resolve: {
+        ...config.resolve,
+        alias: {
+          ...(config.resolve?.alias ?? {}),
+          [serverUtilitiesPath]: serverUtilitiesMockPath,
+          [contactFormEndpointPath]: contactFormEndpointMockPath,
+          [fsPromisesPath]: emptyMockPath
+        }
+      }
+    })
   },
   collections: [
     usersCollection,
@@ -22,8 +42,10 @@ export default buildConfig({
   globals: [
     userInfoGlobal,
     homeGlobal,
-    navGlobal
+    navGlobal,
+    contactGlobal
   ],
+  endpoints: [contactFormEndpoint],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts')
   },
@@ -31,6 +53,19 @@ export default buildConfig({
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql')
   },
   plugins: [
-    payloadCloudStorage()
+    cloudStorage({
+      enabled: process.env.APP_ENV === 'production',
+      collections: {
+        headshots: {
+          adapter: gcsAdapter({
+            options: {},
+            bucket: process.env.GCS_BUCKET ?? ''
+          }),
+          disableLocalStorage: true,
+          disablePayloadAccessControl: true,
+          prefix: 'images/headshots'
+        }
+      }
+    })
   ]
 })

@@ -1,0 +1,25 @@
+{
+  "name": "itmayziii-api-cloud-functions-modify-gcs-uploads",
+  "version": "0.0.1",
+  "description": "Cloud functions specific to itmayziii-api",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "functions-framework --target=modifyGcsUploads --signature-type=cloudevent",
+    "build": "tsc",
+    "gcp-build": "npm run build"
+  },
+  "keywords": [
+    "cloud",
+    "functions"
+  ],
+  "author": "Tommy May III <tommymay37@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@google-cloud/functions-framework": "~3.3.0",
+    "@google-cloud/storage": "~7.1.0",
+    "@google/events": "~5.4.0"
+  },
+  "devDependencies": {
+    "typescript": "~5.2.2"
+  }
+}
