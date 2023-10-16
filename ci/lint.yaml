@@ -1,0 +1,22 @@
+steps:
+  - id: 'install-dependencies'
+    name: 'node:18.17-alpine'
+    entrypoint: 'npm'
+    args: [
+      'ci'
+    ]
+    waitFor: ['-'] # Run immediately
+
+  - id: 'lint'
+    name: 'node:18.17-alpine'
+    entrypoint: 'npm'
+    args: [
+      'run',
+      'lint'
+    ]
+    waitFor: ['install-dependencies']
+
+options:
+  logging: 'CLOUD_LOGGING_ONLY'
+tags: ['app-itmayziii-api', 'lint']
+timeout: '600s' # 10 minutes
