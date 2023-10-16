@@ -16,6 +16,18 @@ steps:
     ]
     waitFor: ['install-dependencies']
 
+  - id: 'typecheck'
+    name: 'node:18.17-alpine'
+    entrypoint: 'npm'
+    args: [
+      'run',
+      'typecheck',
+      '--',
+      '--pretty',
+      'false'
+    ]
+    waitFor: ['install-dependencies']
+
 options:
   logging: 'CLOUD_LOGGING_ONLY'
 tags: ['app-itmayziii-api', 'lint']
