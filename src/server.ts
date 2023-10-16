@@ -1,17 +1,10 @@
 import express from 'express'
 import payload from 'payload'
 import MissingEnvVarError from './errors/MissingEnvVarError'
-import nodemailer from 'nodemailer'
 import mg from 'nodemailer-mailgun-transport'
+import nodemailer from 'nodemailer'
 
 const app = express()
-
-const mailAuth = {
-  auth: {
-    api_key: process.env.MAILGUN_API_KEY ?? '',
-    domain: process.env.MAILGUN_DOMAIN ?? ''
-  }
-}
 
 const start = async (): Promise<void> => {
   if (process.env.PAYLOAD_SECRET == null || process.env.PAYLOAD_SECRET === '') {
@@ -20,22 +13,43 @@ const start = async (): Promise<void> => {
   if (process.env.MONGODB_URI == null || process.env.MONGODB_URI === '') {
     throw new MissingEnvVarError('MONGODB_URI')
   }
+  if (process.env.MG_KEY == null || process.env.MG_KEY === '') {
+    throw new MissingEnvVarError('MG_KEY')
+  }
+  if (process.env.MG_DOMAIN == null || process.env.MG_DOMAIN === '') {
+    throw new MissingEnvVarError('MG_DOMAIN')
+  }
+  let port = 3000
+  if (process.env.PORT != null && process.env.port !== '') {
+    port = Number(process.env.PORT)
+  }
+  if (process.env.EMAIL_FROM == null || process.env.EMAIL_FROM === '') {
+    throw new MissingEnvVarError('EMAIL_FROM')
+  }
+  if (process.env.EMAIL_FROM_NAME == null || process.env.EMAIL_FROM_NAME === '') {
+    throw new MissingEnvVarError('EMAIL_FROM_NAME')
+  }
 
   await payload.init({
     secret: process.env.PAYLOAD_SECRET,
     mongoURL: process.env.MONGODB_URI,
     express: app,
+    email: {
+      fromName: process.env.EMAIL_FROM_NAME,
+      fromAddress: process.env.EMAIL_FROM,
+      transport: nodemailer.createTransport(mg({
+        auth: {
+          api_key: process.env.MG_KEY,
+          domain: process.env.MG_DOMAIN
+        }
+      }))
+    },
     onInit: async () => {
       payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`)
-    },
-    email: {
-      transport: nodemailer.createTransport(mg(mailAuth)),
-      fromName: 'No Reply - tommymay.dev',
-      fromAddress: 'no-reply@tommymay.dev'
     }
   })
 
-  app.listen(3000)
+  app.listen(port)
 }
 
 export default start

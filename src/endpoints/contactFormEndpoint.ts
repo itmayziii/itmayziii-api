@@ -1,10 +1,9 @@
 import { type Endpoint } from 'payload/config'
-import payload from 'payload'
-import path from 'path'
 import Joi from 'joi'
 import { RecaptchaEnterpriseServiceClient } from '@google-cloud/recaptcha-enterprise'
 import InvalidReCaptcha from '../errors/InvalidReCaptcha'
-import { handlebarHtml, verifyGoogleReCaptcha } from '../serverUtilities'
+import { verifyGoogleReCaptcha } from '../serverUtilities'
+import { PubSub } from '@google-cloud/pubsub'
 
 const validationSchema = Joi.object({
   name: Joi.string().required().max(100),
@@ -27,29 +26,29 @@ const contactFormEndpoint: Endpoint = {
 
     void verifyGoogleReCaptcha(recaptchaClient, request.body['g-recaptcha-response'])
       .then(async () => {
-        const templateData = {
-          name: request.body.name,
-          email: request.body.email,
-          subject: request.body.subject,
-          message: request.body.message
-        }
-        const emailHtml = await handlebarHtml(
-          path.resolve(__dirname, '../email-templates/contactEmail.handlebars'),
-          templateData
-        )
-        return await payload.sendEmail({
-          from: {
-            name: 'No Reply - tommymay.dev',
-            address: 'no-reply@tommymay.dev'
-          },
-          subject: `Contact Form Submission - ${request.body.subject}`,
-          html: emailHtml,
-          to: 'tommymay37@gmail.com'
-        })
+        return await (new PubSub())
+          .topic(process.env.EMAIL_API_TOPIC ?? '')
+          .publishMessage({
+            attributes: {
+              app: 'itmayziii-api',
+              domain: 'tommymay.dev'
+            },
+            data: Buffer.from(JSON.stringify({
+              sender: process.env.EMAIL_FROM,
+              subject: `Contact Form Submission - ${request.body.subject}`,
+              template: 'contact.html',
+              to: process.env.CONTACT_EMAIL,
+              data: {
+                name: request.body.name,
+                email: request.body.email,
+                subject: request.body.subject,
+                message: request.body.message
+              }
+            }))
+          })
       })
       .then(() => response.sendStatus(200))
       .catch(error => {
-        console.log('error', error)
         if (error.name === InvalidReCaptcha.errorName) {
           response.status(422).json([
             { message: `"g-recaptcha-response" ${error.message}`, path: 'g-recaptcha-response' }

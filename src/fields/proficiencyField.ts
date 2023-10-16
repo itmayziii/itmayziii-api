@@ -71,21 +71,4 @@ const proficiencyField: SelectField = {
   ]
 }
 
-// js 100
-// ts 90
-// node 100
-// vue 65
-// react 90
-// angular 50
-// angularjs 20
-// terraform 85
-// gcp 90
-// astro 60
-// next 20
-// go 65
-// docker 90
-// java 55
-// ruby 78
-// PHP 88
-
 export default proficiencyField
