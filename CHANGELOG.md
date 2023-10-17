@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/itmayziii/itmayziii-api/compare/itmayziii-api-v1.0.1...itmayziii-api-v1.0.2) (2023-10-17)
+
+
+### Bug Fixes
+
+* **release-please-config:** testing ci process ([68467db](https://github.com/itmayziii/itmayziii-api/commit/68467dbf081a322b18fb086c2c3427c100dd8693))
+
 ## [1.0.1](https://github.com/itmayziii/itmayziii-api/compare/itmayziii-api-v1.0.0...itmayziii-api-v1.0.1) (2023-10-17)
 
 
