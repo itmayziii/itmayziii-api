@@ -32,7 +32,6 @@ const start = async (): Promise<void> => {
 
   await payload.init({
     secret: process.env.PAYLOAD_SECRET,
-    mongoURL: process.env.MONGODB_URI,
     express: app,
     email: {
       fromName: process.env.EMAIL_FROM_NAME,

@@ -1,6 +1,9 @@
 import path from 'path'
 import { buildConfig } from 'payload/config'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { slateEditor } from '@payloadcms/richtext-slate'
 import { cloudStorage } from '@payloadcms/plugin-cloud-storage'
+import { webpackBundler } from '@payloadcms/bundler-webpack'
 import { gcsAdapter } from '@payloadcms/plugin-cloud-storage/gcs'
 import usersCollection from './collections/users'
 import machinesCollection from './collections/machines'
@@ -20,8 +23,13 @@ const contactFormEndpointMockPath = path.resolve(__dirname, 'mocks/contactFormEn
 const fsPromisesPath = 'fs/promises'
 
 export default buildConfig({
+  db: mongooseAdapter({
+    url: process.env.MONGODB_URI ?? ''
+  }),
+  editor: slateEditor({}),
   admin: {
     user: usersCollection.slug,
+    bundler: webpackBundler(),
     webpack: (config) => ({
       ...config,
       resolve: {

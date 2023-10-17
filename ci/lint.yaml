@@ -5,6 +5,8 @@ steps:
     args: [
       'ci'
     ]
+    env:
+      - 'NO_COLOR=true'
     waitFor: ['-'] # Run immediately
 
   - id: 'lint'
@@ -14,6 +16,8 @@ steps:
       'run',
       'lint'
     ]
+    env:
+      - 'NO_COLOR=true'
     waitFor: ['install-dependencies']
 
   - id: 'typecheck'
@@ -26,6 +30,8 @@ steps:
       '--pretty',
       'false'
     ]
+    env:
+      - 'NO_COLOR=true'
     waitFor: ['install-dependencies']
 
 options:

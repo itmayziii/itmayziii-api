@@ -26,10 +26,10 @@ ENV NODE_ENV=$NODE_ENV
 ENV PAYLOAD_CONFIG_PATH=dist/payload.config.js
 
 COPY package*.json ./
-COPY --from=builder /home/node/app/dist ./dist
-COPY --from=builder /home/node/app/build ./build
+COPY --from=builder --chown=node /home/node/app/dist ./dist
+COPY --from=builder --chown=node /home/node/app/build ./build
 
-RUN npm ci
+RUN npm ci && chown -R node:node .
 
 EXPOSE 3000
 
