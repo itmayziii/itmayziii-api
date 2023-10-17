@@ -3,10 +3,12 @@ FROM node:18.17-alpine as builder
 WORKDIR /home/node/app
 
 ARG NODE_ENV=production
+ARG NO_COLOR=false
 
 # Must always be "development". The below "npm ci" command will omit dev dependencies if it is set to "production" and
 # we could therefore not run the build step.
 ENV NODE_ENV=development
+ENV NO_COLOR=$NO_COLOR
 
 COPY package*.json ./
 COPY . .

@@ -6,6 +6,8 @@ steps:
       'build',
       '-t',
       'gcr.io/$PROJECT_ID/$REPO_NAME:$TAG_NAME',
+      '--build-arg',
+      'NO_COLOR=true'
       '.'
     ]
     waitFor: ['-'] # Run immediately
