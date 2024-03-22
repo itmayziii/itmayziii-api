@@ -2,6 +2,18 @@ apiVersion: skaffold/v4beta6
 kind: Config
 metadata:
   name: itmayziii-api
+build:
+  local:
+    push: true
+  artifacts:
+    - image: us-central1-docker.pkg.dev/itmayziii/docker-us-central1/itmayziii-api
+      docker:
+        buildArgs:
+          NO_COLOR: true
+  tagPolicy:
+    # https://skaffold.dev/docs/taggers/#gitcommit-uses-git-commitsreferences-as-tags
+    gitCommit:
+      variant: Tags
 manifests:
   rawYaml:
     - service.yaml

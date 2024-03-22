@@ -1,14 +1,27 @@
 steps:
+  - id: 'build'
+    name: 'gcr.io/k8s-skaffold/skaffold:v2.10.1'
+    entrypoint: 'skaffold'
+    args:
+      - 'build'
+      - '--filename'
+      - 'ci/skaffold.yaml'
+      - '--file-output'
+      - 'skaffold-output.json'
+    waitFor: [ '-' ] # Run immediately
+
   - id: 'apply-delivery-pipeline'
     name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'sh'
+    entrypoint: 'gcloud'
     args:
-      - '-c'
-      - >
-        gcloud deploy apply --project="$$PROJECT_ID" --file="ci/delivery-pipeline.yaml" --region="$$REGION"
-    env:
-      - 'PROJECT_ID=$PROJECT_ID'
-      - 'REGION=$_REGION'
+      - 'deploy'
+      - 'apply'
+      - '--project'
+      - '$PROJECT_ID'
+      - '--file'
+      - 'ci/clouddeploy.yaml'
+      - '--region'
+      - 'us-central1'
     waitFor: ['-'] # Run immediately
 
   - id: 'deploy'
@@ -16,12 +29,14 @@ steps:
     entrypoint: 'sh'
     args:
       - '-c'
-      - >
-        skaffold deploy apply --project="$$PROJECT_ID" --file="ci/delivery-pipeline.yaml" --region="$$REGION"
-    env:
-      - 'PROJECT_ID=$PROJECT_ID'
-      - 'REGION=$_REGION'
-    waitFor: ['apply-delivery-pipeline']
+      - |
+        gcloud deploy releases create itmayziii-api-$(echo $TAG_NAME | sed 's/\./-/g')
+          --project $PROJECT_ID
+          --delivery-pipeline itmayziii-api-cloud-run
+          --region us-central1
+          --build-artifacts skaffold-output.json
+          --skaffold-file ci/skaffold.yaml
+    waitFor: ['build', 'apply-delivery-pipeline']
 
 options:
   logging: 'CLOUD_LOGGING_ONLY'
