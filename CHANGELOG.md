@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/itmayziii/itmayziii-api/compare/v1.0.3...v1.0.4) (2024-03-22)
+
+
+### Bug Fixes
+
+* **package-lock.json:** updated dependencies ([cefd16d](https://github.com/itmayziii/itmayziii-api/commit/cefd16d3277238a217bd181e13188a24b9e7a7f1))
+
 ## [1.0.3](https://github.com/itmayziii/itmayziii-api/compare/itmayziii-api-v1.0.2...itmayziii-api-v1.0.3) (2023-10-17)
 
 
