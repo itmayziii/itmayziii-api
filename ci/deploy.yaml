@@ -30,11 +30,11 @@ steps:
     args:
       - '-c'
       - |
-        gcloud deploy releases create itmayziii-api-$(echo $TAG_NAME | sed 's/\./-/g')
-          --project $PROJECT_ID
-          --delivery-pipeline itmayziii-api-cloud-run
-          --region us-central1
-          --build-artifacts skaffold-output.json
+        gcloud deploy releases create itmayziii-api-$(echo $TAG_NAME | sed 's/\./-/g') \
+          --project $PROJECT_ID \
+          --delivery-pipeline itmayziii-api-cloud-run \
+          --region us-central1 \
+          --build-artifacts skaffold-output.json \
           --skaffold-file ci/skaffold.yaml
     waitFor: ['build', 'apply-delivery-pipeline']
 
