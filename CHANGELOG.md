@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.2](https://github.com/itmayziii/itmayziii-api/compare/v1.1.1...v1.1.2) (2024-03-24)
+
+
+### Bug Fixes
+
+* **cloud storage plugin:** not relying on APP_ENV to add cloud storage ([c4c83dc](https://github.com/itmayziii/itmayziii-api/commit/c4c83dc0c27a50dc74bd5bb885a8c1e770014438))
+* **src/payload.config.ts:** fixed prefix path for cloud storage bucket ([cb85ac0](https://github.com/itmayziii/itmayziii-api/commit/cb85ac0cabd3811944033dc3661d57fcc6cbbf5c))
+
 ## [1.1.1](https://github.com/itmayziii/itmayziii-api/compare/v1.1.3...v1.1.1) (2024-03-24)
 
 
