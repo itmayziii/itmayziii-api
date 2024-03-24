@@ -1,5 +1,5 @@
 import path from 'path'
-import { buildConfig } from 'payload/config'
+import { buildConfig, type Plugin } from 'payload/config'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { cloudStorage } from '@payloadcms/plugin-cloud-storage'
@@ -23,6 +23,24 @@ const serverUtilitiesMockPath = path.resolve(__dirname, 'mocks/serverUtilitiesMo
 const contactFormEndpointPath = path.resolve(__dirname, 'endpoints/contactFormEndpoint')
 const contactFormEndpointMockPath = path.resolve(__dirname, 'mocks/contactFormEndpointMock')
 const fsPromisesPath = 'fs/promises'
+
+let plugins: Plugin[] = []
+if (process.env.GCS_BUCKET == null || process.env.GCS_BUCKET === '') {
+  plugins = [...plugins, cloudStorage({
+    enabled: true,
+    collections: {
+      headshots: {
+        adapter: gcsAdapter({
+          options: {},
+          bucket: process.env.GCS_BUCKET ?? ''
+        }),
+        disableLocalStorage: true,
+        disablePayloadAccessControl: true,
+        prefix: 'live/images/headshots'
+      }
+    }
+  })]
+}
 
 export default buildConfig({
   db: mongooseAdapter({
@@ -65,20 +83,5 @@ export default buildConfig({
   },
   csrf: csrfUrls(),
   cors: corsUrls(),
-  plugins: [
-    cloudStorage({
-      enabled: process.env.APP_ENV === 'production',
-      collections: {
-        headshots: {
-          adapter: gcsAdapter({
-            options: {},
-            bucket: process.env.GCS_BUCKET ?? ''
-          }),
-          disableLocalStorage: true,
-          disablePayloadAccessControl: true,
-          prefix: 'live/images/headshots'
-        }
-      }
-    })
-  ]
+  plugins
 })
