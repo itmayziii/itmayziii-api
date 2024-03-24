@@ -76,7 +76,7 @@ export default buildConfig({
           }),
           disableLocalStorage: true,
           disablePayloadAccessControl: true,
-          prefix: 'images/headshots'
+          prefix: 'live/images/headshots'
         }
       }
     })
