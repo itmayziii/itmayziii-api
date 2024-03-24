@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/itmayziii/itmayziii-api/compare/v1.1.0...v1.1.1) (2024-03-24)
+
+
+### Continuous Integration
+
+* **ci/service.yaml:** added CORS_URLS env variable ([98e7bc6](https://github.com/itmayziii/itmayziii-api/commit/98e7bc6d7bbef2b22b2f53bffb2f98d9152cfc77))
+
 ## [1.1.0](https://github.com/itmayziii/itmayziii-api/compare/v1.0.4...v1.1.0) (2024-03-24)
 
 
