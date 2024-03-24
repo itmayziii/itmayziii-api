@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/itmayziii/itmayziii-api/compare/v1.0.4...v1.1.0) (2024-03-24)
+
+
+### Features
+
+* **cors, csrf:** added cors and csrf ([7b073c8](https://github.com/itmayziii/itmayziii-api/commit/7b073c8e8a0e64baa537f5a48357f18b1130c2b4))
+
 ## [1.0.4](https://github.com/itmayziii/itmayziii-api/compare/v1.0.3...v1.0.4) (2024-03-22)
 
 
