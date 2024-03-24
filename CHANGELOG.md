@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.5](https://github.com/itmayziii/itmayziii-api/compare/v1.1.4...v1.1.5) (2024-03-24)
+
+
+### Bug Fixes
+
+* **src/payload.config:** yet again fixing payload cms's plugin system, what a mess ([21dc97a](https://github.com/itmayziii/itmayziii-api/commit/21dc97aa02d7e5cba5b254bc28d37421c6aa1066))
+
 ## [1.1.4](https://github.com/itmayziii/itmayziii-api/compare/v1.1.3...v1.1.4) (2024-03-24)
 
 
