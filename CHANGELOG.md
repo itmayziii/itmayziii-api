@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/itmayziii/itmayziii-api/compare/v1.1.3...v1.1.4) (2024-03-24)
+
+
+### Bug Fixes
+
+* **src/payload.config.ts:** fixed issue where cloud storage was not working ([2fde075](https://github.com/itmayziii/itmayziii-api/commit/2fde075ecf5731976f6c1533c93a0e386b12dbaa))
+
 ## [1.1.3](https://github.com/itmayziii/itmayziii-api/compare/v1.1.2...v1.1.3) (2024-03-24)
 
 
