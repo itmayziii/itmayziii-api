@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/itmayziii/itmayziii-api/compare/v1.1.1...v1.1.2) (2024-03-24)
+
+
+### Bug Fixes
+
+* **src/payload.config.ts:** fixed prefix path for cloud storage bucket ([cb85ac0](https://github.com/itmayziii/itmayziii-api/commit/cb85ac0cabd3811944033dc3661d57fcc6cbbf5c))
+
 ## [1.1.1](https://github.com/itmayziii/itmayziii-api/compare/v1.1.0...v1.1.1) (2024-03-24)
 
 
