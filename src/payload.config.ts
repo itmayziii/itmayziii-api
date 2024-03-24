@@ -24,11 +24,6 @@ const contactFormEndpointPath = path.resolve(__dirname, 'endpoints/contactFormEn
 const contactFormEndpointMockPath = path.resolve(__dirname, 'mocks/contactFormEndpointMock')
 const fsPromisesPath = 'fs/promises'
 
-let plugins: Plugin[] = []
-if (process.env.GCS_BUCKET != null && process.env.GCS_BUCKET !== '') {
-  plugins = [...plugins]
-}
-
 export default buildConfig({
   db: mongooseAdapter({
     url: process.env.MONGODB_URI ?? ''
