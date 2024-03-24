@@ -1,5 +1,5 @@
 import path from 'path'
-import { buildConfig, type Plugin } from 'payload/config'
+import { buildConfig } from 'payload/config'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { cloudStorage } from '@payloadcms/plugin-cloud-storage'
