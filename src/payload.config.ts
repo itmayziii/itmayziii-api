@@ -25,7 +25,7 @@ const contactFormEndpointMockPath = path.resolve(__dirname, 'mocks/contactFormEn
 const fsPromisesPath = 'fs/promises'
 
 let plugins: Plugin[] = []
-if (process.env.GCS_BUCKET == null || process.env.GCS_BUCKET === '') {
+if (process.env.GCS_BUCKET != null && process.env.GCS_BUCKET !== '') {
   plugins = [...plugins, cloudStorage({
     enabled: true,
     collections: {
