@@ -4,6 +4,7 @@ import { RecaptchaEnterpriseServiceClient } from '@google-cloud/recaptcha-enterp
 import InvalidReCaptcha from '../errors/InvalidReCaptcha'
 import { verifyGoogleReCaptcha } from '../serverUtilities'
 import { PubSub } from '@google-cloud/pubsub'
+import payload from 'payload'
 
 const validationSchema = Joi.object({
   name: Joi.string().required().max(100),
@@ -20,11 +21,15 @@ const contactFormEndpoint: Endpoint = {
   handler (request, response): void {
     const validationResult = validationSchema.validate(request.body)
     if (validationResult.error != null) {
+      const errorDetails = validationResult.error.details.reduce((errors, result) => {
+        return `${errors}, ${result.message}`
+      }, '')
+      payload.logger.info(`invalid request - ${errorDetails}`, validationResult.error.details)
       response.status(422).json(validationResult.error.details)
       return
     }
 
-    void verifyGoogleReCaptcha(recaptchaClient, request.body['g-recaptcha-response'])
+    void verifyGoogleReCaptcha(recaptchaClient, request.body['g-recaptcha-response'], 'contact')
       .then(async () => {
         return await (new PubSub())
           .topic(process.env.EMAIL_API_TOPIC ?? '')
@@ -56,6 +61,7 @@ const contactFormEndpoint: Endpoint = {
           return
         }
 
+        payload.logger.error(error.message)
         response.sendStatus(500)
       })
   }

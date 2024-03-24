@@ -14,6 +14,8 @@ import navGlobal from './globals/nav'
 import contactGlobal from './globals/contact'
 import contactFormEndpoint from './endpoints/contactFormEndpoint'
 import healthCheckEndpoint from './endpoints/healthCheckEndpoint'
+import csrfUrls from './csrfUrls'
+import corsUrls from './corsUrls'
 
 const emptyMockPath = path.resolve(__dirname, 'mocks/empty')
 const serverUtilitiesPath = path.resolve(__dirname, 'serverUtilities')
@@ -61,7 +63,8 @@ export default buildConfig({
   graphQL: {
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql')
   },
-  csrf: csrf(),
+  csrf: csrfUrls(),
+  cors: corsUrls(),
   plugins: [
     cloudStorage({
       enabled: process.env.APP_ENV === 'production',
@@ -79,9 +82,3 @@ export default buildConfig({
     })
   ]
 })
-
-function csrf (): string[] {
-  if (process.env.CSRF_DOMAINS == null || process.env.CSRF_DOMAINS === '') return []
-
-  return process.env.CSRF_DOMAINS.split(',')
-}

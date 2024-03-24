@@ -2,8 +2,6 @@ import crypto from 'crypto'
 import { type FieldHook } from 'payload/types'
 import { type RecaptchaEnterpriseServiceClient, type protos } from '@google-cloud/recaptcha-enterprise'
 import InvalidReCaptcha from './errors/InvalidReCaptcha'
-import fs from 'fs/promises'
-import Handlebars from 'handlebars'
 
 /**
  * https://developers.google.com/maps/documentation/maps-static/digital-signature
@@ -27,14 +25,15 @@ export const signStaticMapUrlHook: FieldHook = function signStaticMapUrlHook ({ 
 
 export async function verifyGoogleReCaptcha (
   client: RecaptchaEnterpriseServiceClient,
-  token: string
+  token: string,
+  action: string
 ): Promise<protos.google.cloud.recaptchaenterprise.v1.IAssessment> {
   const [assessmentResponse] = await client.createAssessment({
     assessment: {
       event: {
         token,
         siteKey: process.env.GOOGLE_RECAPTCHA_SITE_KEY,
-        expectedAction: 'contact'
+        expectedAction: action
       }
 
     },
@@ -63,10 +62,4 @@ export async function verifyGoogleReCaptcha (
   }
 
   return assessmentResponse
-}
-
-export async function handlebarHtml (templatePath: string, data: Record<string, any>): Promise<string> {
-  const contents = await fs.readFile(templatePath, 'utf8')
-  const compiledTemplate = Handlebars.compile(contents)
-  return compiledTemplate(data)
 }

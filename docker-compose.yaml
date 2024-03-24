@@ -15,11 +15,10 @@ services:
       - ./.eslintrc.json:/home/node/app/.eslintrc.json
       - ./nodemon.json:/home/node/app/nodemon.json
       - ./tsconfig.json:/home/node/app/tsconfig.json
+      - ./credentials:/home/node/app/credentials
     command: sh -c "npm run dev"
     depends_on:
       - mongo
-    env_file:
-      - .env
 
   mongo:
     image: mongo:latest

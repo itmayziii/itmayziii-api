@@ -3,8 +3,14 @@ import payload from 'payload'
 import MissingEnvVarError from './errors/MissingEnvVarError'
 import mg from 'nodemailer-mailgun-transport'
 import nodemailer from 'nodemailer'
+import dayjs from './dayjs'
+import cors from 'cors'
+import corsUrls from './corsUrls'
 
 const app = express()
+app.use(cors({
+  origin: corsUrls()
+}))
 
 const start = async (): Promise<void> => {
   if (process.env.PAYLOAD_SECRET == null || process.env.PAYLOAD_SECRET === '') {
@@ -45,6 +51,37 @@ const start = async (): Promise<void> => {
     },
     onInit: async () => {
       payload.logger.info(`Payload Admin URL: ${payload.getAdminURL()}`)
+    },
+    loggerOptions: {
+      level: process.env.APP_ENV === 'production' ? 'error' : 'debug',
+      messageKey: 'message',
+      timestamp: () => `,"time":"${dayjs().format('YYYY-MM-DD[T]HH-mm-ss[Z]')}"`,
+      formatters: {
+        level (label, number) {
+          let severity = 'DEFAULT'
+          switch (label) {
+            case 'trace':
+              severity = 'DEBUG'
+              break
+            case 'debug':
+              severity = 'DEBUG'
+              break
+            case 'info':
+              severity = 'INFO'
+              break
+            case 'warn':
+              severity = 'WARNING'
+              break
+            case 'error':
+              severity = 'ERROR'
+              break
+            case 'fatal':
+              severity = 'FATAL'
+              break
+          }
+          return { severity }
+        }
+      }
     }
   })
 
