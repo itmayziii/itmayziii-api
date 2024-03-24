@@ -26,20 +26,7 @@ const fsPromisesPath = 'fs/promises'
 
 let plugins: Plugin[] = []
 if (process.env.GCS_BUCKET != null && process.env.GCS_BUCKET !== '') {
-  plugins = [...plugins, cloudStorage({
-    enabled: true,
-    collections: {
-      headshots: {
-        adapter: gcsAdapter({
-          options: {},
-          bucket: process.env.GCS_BUCKET ?? ''
-        }),
-        disableLocalStorage: true,
-        disablePayloadAccessControl: true,
-        prefix: 'live/images/headshots'
-      }
-    }
-  })]
+  plugins = [...plugins]
 }
 
 export default buildConfig({
@@ -83,5 +70,20 @@ export default buildConfig({
   },
   csrf: csrfUrls(),
   cors: corsUrls(),
-  plugins
+  plugins: [
+    cloudStorage({
+      enabled: process.env.GCS_BUCKET != null && process.env.GCS_BUCKET !== '',
+      collections: {
+        headshots: {
+          adapter: gcsAdapter({
+            options: {},
+            bucket: process.env.GCS_BUCKET ?? ''
+          }),
+          disableLocalStorage: true,
+          disablePayloadAccessControl: true,
+          prefix: 'live/images/headshots'
+        }
+      }
+    })
+  ]
 })
