@@ -12,11 +12,6 @@ app.use(cors({
   origin: corsUrls()
 }))
 
-app.use((req, res, next) => {
-  console.log(req.headers)
-  next()
-})
-
 const start = async (): Promise<void> => {
   if (process.env.PAYLOAD_SECRET == null || process.env.PAYLOAD_SECRET === '') {
     throw new MissingEnvVarError('PAYLOAD_SECRET')
