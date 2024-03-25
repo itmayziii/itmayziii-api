@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.6](https://github.com/itmayziii/itmayziii-api/compare/v1.1.5...v1.1.6) (2024-03-25)
+
+
+### Code Refactoring
+
+* **src/server.ts:** logging request headers for debugging ([ac67de7](https://github.com/itmayziii/itmayziii-api/commit/ac67de77395edc2835df98f92adbf3754a480e50))
+
 ## [1.1.5](https://github.com/itmayziii/itmayziii-api/compare/v1.1.4...v1.1.5) (2024-03-24)
 
 
