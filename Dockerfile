@@ -36,4 +36,4 @@ RUN npm ci && chown -R node:node .
 EXPOSE 3000
 
 USER node
-CMD ["node", "dist/index.js"]
+CMD ["npm", "run", "serve"]
