@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/itmayziii/itmayziii-api/compare/v1.1.6...v1.7.0) (2024-03-25)
+
+
+### Code Refactoring
+
+* **src/server.ts:** removed debug console.log ([93fd7af](https://github.com/itmayziii/itmayziii-api/commit/93fd7af64e3e5113cf871b836e5e1749cd0e4279))
+
 ## [1.1.6](https://github.com/itmayziii/itmayziii-api/compare/v1.1.5...v1.1.6) (2024-03-25)
 
 
