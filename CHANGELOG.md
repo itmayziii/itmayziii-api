@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.1](https://github.com/itmayziii/itmayziii-api/compare/v1.7.0...v1.7.1) (2024-03-27)
+
+
+### Bug Fixes
+
+* **src/payload.config:** using generateFileURL in addition to collection staticURL ([7583669](https://github.com/itmayziii/itmayziii-api/commit/7583669f53233898b1cad8128aa4b321594da7f5))
+
 ## [1.7.0](https://github.com/itmayziii/itmayziii-api/compare/v1.1.6...v1.7.0) (2024-03-25)
 
 
