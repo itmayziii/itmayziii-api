@@ -76,7 +76,12 @@ export default buildConfig({
           }),
           disableLocalStorage: true,
           disablePayloadAccessControl: true,
-          prefix: 'live/images/headshots'
+          prefix: 'live/images/headshots',
+          generateFileURL ({ filename }) {
+            return process.env.MEDIA_URL == null || process.env.MEDIA_URL === ''
+              ? '/media/headshots'
+              : (new URL(`images/headshots/${filename}`, process.env.MEDIA_URL)).toString()
+          }
         }
       }
     })

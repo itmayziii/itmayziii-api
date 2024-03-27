@@ -19,7 +19,9 @@ const headshotsCollection: CollectionConfig = {
     read: () => true
   },
   upload: {
-    staticURL: process.env.MEDIA_URL === undefined ? '/media/headshots' : `${process.env.MEDIA_URL}/images/headshots`,
+    staticURL: process.env.MEDIA_URL == null || process.env.MEDIA_URL === ''
+      ? '/media/headshots'
+      : `${process.env.MEDIA_URL}/images/headshots`,
     staticDir: '../media/headshots',
     imageSizes: [
       {
